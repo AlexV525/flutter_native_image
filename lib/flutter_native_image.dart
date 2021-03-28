@@ -13,23 +13,20 @@ class FlutterNativeImage {
   /// [quality] controls how strong the compression should be. (0-100)
   /// Use [targetWidth] and [targetHeight] to resize the image for a specific
   /// target size.
-  static Future<File?> compressImage(
+  static Future<File> compressImage(
     String fileName, {
     int percentage = 70,
     int quality = 70,
     int targetWidth = 0,
     int targetHeight = 0,
   }) async {
-    final String? path = await _channel.invokeMethod('compressImage', {
+    final String path = await _channel.invokeMethod('compressImage', {
       'file': fileName,
       'quality': quality,
       'percentage': percentage,
       'targetWidth': targetWidth,
       'targetHeight': targetHeight
     });
-    if (path == null) {
-      return null;
-    }
     return File(path);
   }
 
@@ -55,14 +52,14 @@ class FlutterNativeImage {
   /// Crops the given [fileName].
   /// [originX] and [originY] control from where the image should be cropped.
   /// [width] and [height] control how the image is being cropped.
-  static Future<File?> cropImage(
+  static Future<File> cropImage(
     String fileName,
     int originX,
     int originY,
     int width,
     int height,
   ) async {
-    final String? path = await _channel.invokeMethod(
+    final String path = await _channel.invokeMethod(
       'cropImage',
       <String, dynamic>{
         'file': fileName,
@@ -72,10 +69,6 @@ class FlutterNativeImage {
         'height': height
       },
     );
-
-    if (path == null) {
-      return null;
-    }
     return File(path);
   }
 
